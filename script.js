@@ -1,4 +1,4 @@
-// List of your PDF files (add your actual PDF filenames here)
+// List of your PDF files
 const pdfFiles = [
     "sample-writing1.pdf",
     "sample-writing2.pdf"
@@ -6,8 +6,8 @@ const pdfFiles = [
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
+    // PDF embedding
     const pdfList = document.getElementById("pdf-list");
-    
     pdfFiles.forEach(pdf => {
         const div = document.createElement("div");
         div.className = "pdf-item";
@@ -16,5 +16,24 @@ document.addEventListener("DOMContentLoaded", () => {
             <iframe src="writings/${pdf}" width="100%" height="300"></iframe>
         `;
         pdfList.appendChild(div);
+    });
+
+    // Dark mode toggle
+    const toggleButton = document.getElementById("theme-toggle");
+    const body = document.body;
+
+    // Check for saved theme preference
+    if (localStorage.getItem("theme") === "dark") {
+        body.setAttribute("data-theme", "dark");
+    }
+
+    toggleButton.addEventListener("click", () => {
+        if (body.getAttribute("data-theme") === "dark") {
+            body.removeAttribute("data-theme");
+            localStorage.setItem("theme", "light");
+        } else {
+            body.setAttribute("data-theme", "dark");
+            localStorage.setItem("theme", "dark");
+        }
     });
 });
