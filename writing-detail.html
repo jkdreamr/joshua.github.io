@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Writing - Joshua Koo</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="glitch" data-text="Writing">Writing</h1>
+        <iframe id="pdfViewer" class="fade-in" style="width: 80%; height: 80vh;"></iframe>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const pdfFile = urlParams.get('file');
+        document.getElementById('pdfViewer').src = `assets/${pdfFile}`;
+    </script>
+</body>
+</html>
