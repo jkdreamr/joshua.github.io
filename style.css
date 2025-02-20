@@ -28,7 +28,7 @@ body {
     background: rgba(0, 0, 0, 0.95);
     padding: 1rem;
     z-index: 1000;
-    box-shadow: 0 2px 15px rgba(0, 255, 204, 0.4);
+    border-bottom: 2px solid #00ffcc; /* Teal underline like reference image */
     transition: transform 0.6s ease-in-out, background 0.6s ease-in-out;
 }
 
@@ -51,13 +51,29 @@ body {
     color: #fff;
     text-decoration: none;
     font-size: 1.1rem;
+    position: relative;
     transition: color 0.5s ease-in-out, transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
+}
+
+.nav-list a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background: #00ffcc;
+    transition: width 0.5s ease-in-out;
 }
 
 .nav-list a:hover {
     color: #00ffcc;
     transform: scale(1.15) rotate(2deg);
     text-shadow: 0 0 20px #00ffcc, 0 0 30px #00ffcc;
+}
+
+.nav-list a:hover::after {
+    width: 100%;
 }
 
 .section {
@@ -147,12 +163,13 @@ h2 {
 .pdf-link {
     color: #00ffcc;
     text-decoration: none;
-    transition: color 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out, text-shadow 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .pdf-link:hover {
     color: #00cc99;
     text-shadow: 0 0 20px #00ffcc;
+    transform: scale(1.1) rotate(2deg);
 }
 
 #contact-form {
