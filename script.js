@@ -12,12 +12,13 @@ class Particle {
         this.radius = Math.random() * 1.5 + 0.5;
         this.velocityX = (Math.random() - 0.5) * 1.5;
         this.velocityY = (Math.random() - 0.5) * 1.5;
+        this.color = 'rgba(255, 255, 255, 0.1)';
     }
 
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.fillStyle = this.color;
         ctx.fill();
     }
 
@@ -27,11 +28,16 @@ class Particle {
 
         if (this.x < 0 || this.x > canvas.width) this.velocityX *= -1;
         if (this.y < 0 || this.y > canvas.height) this.velocityY *= -1;
+
+        // Add subtle color change for aesthetic effect
+        if (Math.random() < 0.01) {
+            this.color = `rgba(0, 255, 204, ${Math.random() * 0.3 + 0.1})`;
+        }
     }
 }
 
 const particles = [];
-for (let i = 0; i < 80; i++) {
+for (let i = 0; i < 100; i++) {
     particles.push(new Particle());
 }
 
@@ -59,7 +65,7 @@ window.addEventListener('scroll', () => {
         const rect = section.getBoundingClientRect();
         if (rect.top < window.innerHeight - 150) {
             section.classList.add('active');
-            section.style.transitionDelay = `${Math.random() * 0.5}s`; // Staggered delays for variety
+            section.style.transitionDelay = `${Math.random() * 0.3}s`; // Staggered delays for variety
         }
     });
 });
@@ -77,6 +83,8 @@ fileInput.addEventListener('change', (e) => {
         const reader = new FileReader();
         reader.onload = (e) => {
             profilePic.src = e.target.result;
+            profilePic.style.animation = 'fadeIn 1s ease-out';
+            setTimeout(() => profilePic.style.animation = '', 1000);
         };
         reader.readAsDataURL(file);
     }
@@ -90,19 +98,22 @@ profilePic.addEventListener('click', () => {
 const form = document.getElementById('contact-form');
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    alert('Message sent successfully! (This is a demo)');
-    form.reset();
+    form.style.animation = 'pulse 0.8s ease-in-out';
+    setTimeout(() => {
+        form.style.animation = '';
+        alert('Message sent successfully! (This is a demo)');
+        form.reset();
+    }, 800);
 });
 
 // Hover Effects for Cards
-const cards = document.querySelectorAll('.experience-card, .writing-card, .writing-content');
+const cards = document.querySelectorAll('.experience-card, .writing-card');
 cards.forEach(card => {
     card.addEventListener('mouseenter', () => {
         card.style.background = 'rgba(0, 255, 204, 0.08)';
-        card.style.transform = 'translateY(-15px) scale(1.05)';
+        card.style.transform = 'translateY(-15px) scale(1.05) rotate(1deg)';
+        card.style.boxShadow = '0 0 30px #00ffcc';
+        card.style.opacity = '1';
     });
     card.addEventListener('mouseleave', () => {
-        card.style.background = 'rgba(255, 255, 255, 0.03)';
-        card.style.transform = 'translateY(0) scale(1)';
-    });
-});
+        card.style.background = 'rgba(255, 255, 255, 0.02Sorry about that, something didn't go as planned. Please try again, and if you're still seeing this message, go ahead and restart the app.
