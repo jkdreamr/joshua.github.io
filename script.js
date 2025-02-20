@@ -1,20 +1,29 @@
-// Custom cursor
+// DOM Elements
 const cursor = document.querySelector('.cursor');
 const cursorFollower = document.querySelector('.cursor-follower');
 const links = document.querySelectorAll('a');
+const heroSection = document.querySelector('.hero-section');
+const glitchText = document.querySelector('.glitch');
+const nav = document.querySelector('.nav-wrapper');
+const revealElements = document.querySelectorAll('.reveal');
+const cards = document.querySelectorAll('.card');
+const titles = document.querySelectorAll('.section-title');
+const skillItems = document.querySelectorAll('.skill-item');
 
+// Custom cursor movement
 document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    
-    // Add slight delay to follower for smooth effect
-    setTimeout(() => {
-        cursorFollower.style.left = e.clientX + 'px';
-        cursorFollower.style.top = e.clientY + 'px';
-    }, 50);
+    requestAnimationFrame(() => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+        
+        setTimeout(() => {
+            cursorFollower.style.left = `${e.clientX}px`;
+            cursorFollower.style.top = `${e.clientY}px`;
+        }, 50);
+    });
 });
 
-// Custom cursor interactions
+// Link hover effects
 links.forEach(link => {
     link.addEventListener('mouseenter', () => {
         cursor.style.transform = 'scale(2)';
@@ -27,12 +36,11 @@ links.forEach(link => {
     });
 });
 
-// Smooth scroll for navigation
+// Smooth scroll navigation
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        
         if (target) {
             target.scrollIntoView({
                 behavior: 'smooth',
@@ -43,9 +51,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Scroll reveal animation
-const revealElements = document.querySelectorAll('.reveal');
-
-const revealOnScroll = () => {
+function revealOnScroll() {
     revealElements.forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
         const elementVisible = 150;
@@ -54,54 +60,31 @@ const revealOnScroll = () => {
             element.classList.add('active');
         }
     });
-};
+}
 
-window.addEventListener('scroll', revealOnScroll);
-
-// Parallax effect for hero section
-const heroSection = document.querySelector('.hero-section');
-const glitchText = document.querySelector('.glitch');
-
-window.addEventListener('scroll', () => {
+// Parallax scroll effect
+function handleScroll() {
     const scrolled = window.pageYOffset;
-    const rate = scrolled * 0.5;
     
-    glitchText.style.transform = `translate3d(0, ${rate}px, 0)`;
-    heroSection.style.opacity = 1 - scrolled / 500;
-});
-
-// Navigation background change on scroll
-const nav = document.querySelector('.nav-wrapper');
-
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-        nav.style.background = 'rgba(0, 0, 0, 0.95)';
-    } else {
-        nav.style.background = 'rgba(0, 0, 0, 0.8)';
+    // Hero parallax
+    if (glitchText && heroSection) {
+        const rate = scrolled * 0.5;
+        glitchText.style.transform = `translate3d(0, ${rate}px, 0)`;
+        heroSection.style.opacity = Math.max(0, 1 - scrolled / 500);
     }
-});
-
-// Glitch effect enhancement
-const glitch = document.querySelector('.glitch');
-let glitchInterval;
-
-const startGlitch = () => {
-    const randomOffset = () => `${Math.random() * 10 - 5}px`;
     
-    glitchInterval = setInterval(() => {
-        glitch.style.transform = `translate(${randomOffset()}, ${randomOffset()})`;
-        
-        setTimeout(() => {
-            glitch.style.transform = 'translate(0, 0)';
-        }, 50);
-    }, 3000);
-};
+    // Navigation background
+    if (nav) {
+        nav.style.backgroundColor = window.scrollY > 100 ? 
+            'rgba(0, 0, 0, 0.95)' : 
+            'rgba(0, 0, 0, 0.8)';
+    }
+    
+    // Reveal elements
+    revealOnScroll();
+}
 
-startGlitch();
-
-// Card hover effect
-const cards = document.querySelectorAll('.card');
-
+// Card hover effects
 cards.forEach(card => {
     card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -114,7 +97,12 @@ cards.forEach(card => {
         const angleX = (y - centerY) / 20;
         const angleY = (centerX - x) / 20;
         
-        card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.05, 1.05, 1.05)`;
+        card.style.transform = `
+            perspective(1000px) 
+            rotateX(${angleX}deg) 
+            rotateY(${angleY}deg) 
+            scale3d(1.05, 1.05, 1.05)
+        `;
     });
     
     card.addEventListener('mouseleave', () => {
@@ -122,46 +110,7 @@ cards.forEach(card => {
     });
 });
 
-// Add loading animation
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-});
-
-// Typing effect for section titles
-const titles = document.querySelectorAll('.section-title');
-
-const typeWriter = (element) => {
-    const text = element.textContent;
-    element.textContent = '';
-    
-    let i = 0;
-    const type = () => {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, 100);
-        }
-    };
-    
-    type();
-};
-
-// Initialize animations when sections come into view
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            if (entry.target.classList.contains('section-title')) {
-                typeWriter(entry.target);
-            }
-        }
-    });
-}, { threshold: 0.5 });
-
-titles.forEach(title => observer.observe(title));
-
 // Skill items animation
-const skillItems = document.querySelectorAll('.skill-item');
-
 skillItems.forEach(item => {
     item.addEventListener('mouseenter', () => {
         item.style.transform = 'translateY(-10px) scale(1.1)';
@@ -170,4 +119,26 @@ skillItems.forEach(item => {
     item.addEventListener('mouseleave', () => {
         item.style.transform = 'translateY(0) scale(1)';
     });
+});
+
+// Glitch effect
+function createGlitchEffect() {
+    if (glitchText) {
+        setInterval(() => {
+            const randomOffset = () => `${Math.random() * 10 - 5}px`;
+            glitchText.style.transform = `translate(${randomOffset()}, ${randomOffset()})`;
+            
+            setTimeout(() => {
+                glitchText.style.transform = 'translate(0, 0)';
+            }, 50);
+        }, 3000);
+    }
+}
+
+// Initialize
+window.addEventListener('scroll', handleScroll);
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+    createGlitchEffect();
+    revealOnScroll(); // Initial check for elements in view
 });
