@@ -1,144 +1,83 @@
-// DOM Elements
-const cursor = document.querySelector('.cursor');
-const cursorFollower = document.querySelector('.cursor-follower');
-const links = document.querySelectorAll('a');
-const heroSection = document.querySelector('.hero-section');
-const glitchText = document.querySelector('.glitch');
-const nav = document.querySelector('.nav-wrapper');
-const revealElements = document.querySelectorAll('.reveal');
-const cards = document.querySelectorAll('.card');
-const titles = document.querySelectorAll('.section-title');
-const skillItems = document.querySelectorAll('.skill-item');
+// Particle Background
+const canvas = document.getElementById('background-canvas');
+const ctx = canvas.getContext('2d');
 
-// Custom cursor movement
-document.addEventListener('mousemove', (e) => {
-    requestAnimationFrame(() => {
-        cursor.style.left = `${e.clientX}px`;
-        cursor.style.top = `${e.clientY}px`;
-        
-        setTimeout(() => {
-            cursorFollower.style.left = `${e.clientX}px`;
-            cursorFollower.style.top = `${e.clientY}px`;
-        }, 50);
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 2 + 1;
+        this.velocityX = (Math.random() - 0.5) * 2;
+        this.velocityY = (Math.random() - 0.5) * 2;
+    }
+
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.fill();
+    }
+
+    update() {
+        this.x += this.velocityX;
+        this.y += this.velocityY;
+
+        if (this.x < 0 || this.x > canvas.width) this.velocityX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.velocityY *= -1;
+    }
+}
+
+const particles = [];
+for (let i = 0; i < 100; i++) {
+    particles.push(new Particle());
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(particle => {
+        particle.update();
+        particle.draw();
     });
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 });
 
-// Link hover effects
-links.forEach(link => {
-    link.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'scale(2)';
-        cursorFollower.style.transform = 'scale(0)';
-    });
-    
-    link.addEventListener('mouseleave', () => {
-        cursor.style.transform = 'scale(1)';
-        cursorFollower.style.transform = 'scale(1)';
-    });
-});
+// Scroll Animations
+const sections = document.querySelectorAll('.section');
 
-// Smooth scroll navigation
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+window.addEventListener('scroll', () => {
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+            section.classList.add('active');
         }
     });
 });
 
-// Scroll reveal animation
-function revealOnScroll() {
-    revealElements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
+// Form Submission
+const form = document.getElementById('contact-form');
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Message sent successfully! (This is a demo)');
+    form.reset();
+});
 
-        if (elementTop < window.innerHeight - elementVisible) {
-            element.classList.add('active');
-        }
-    });
-}
-
-// Parallax scroll effect
-function handleScroll() {
-    const scrolled = window.pageYOffset;
-    
-    // Hero parallax
-    if (glitchText && heroSection) {
-        const rate = scrolled * 0.5;
-        glitchText.style.transform = `translate3d(0, ${rate}px, 0)`;
-        heroSection.style.opacity = Math.max(0, 1 - scrolled / 500);
-    }
-    
-    // Navigation background
-    if (nav) {
-        nav.style.backgroundColor = window.scrollY > 100 ? 
-            'rgba(0, 0, 0, 0.95)' : 
-            'rgba(0, 0, 0, 0.8)';
-    }
-    
-    // Reveal elements
-    revealOnScroll();
-}
-
-// Card hover effects
+// Hover Effects for Cards
+const cards = document.querySelectorAll('.experience-card, .writing-card, .thought-card');
 cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const angleX = (y - centerY) / 20;
-        const angleY = (centerX - x) / 20;
-        
-        card.style.transform = `
-            perspective(1000px) 
-            rotateX(${angleX}deg) 
-            rotateY(${angleY}deg) 
-            scale3d(1.05, 1.05, 1.05)
-        `;
+    card.addEventListener('mouseenter', () => {
+        card.style.background = 'rgba(255, 255, 255, 0.15)';
     });
-    
     card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        card.style.background = 'rgba(255, 255, 255, 0.05)';
     });
-});
-
-// Skill items animation
-skillItems.forEach(item => {
-    item.addEventListener('mouseenter', () => {
-        item.style.transform = 'translateY(-10px) scale(1.1)';
-    });
-    
-    item.addEventListener('mouseleave', () => {
-        item.style.transform = 'translateY(0) scale(1)';
-    });
-});
-
-// Glitch effect
-function createGlitchEffect() {
-    if (glitchText) {
-        setInterval(() => {
-            const randomOffset = () => `${Math.random() * 10 - 5}px`;
-            glitchText.style.transform = `translate(${randomOffset()}, ${randomOffset()})`;
-            
-            setTimeout(() => {
-                glitchText.style.transform = 'translate(0, 0)';
-            }, 50);
-        }, 3000);
-    }
-}
-
-// Initialize
-window.addEventListener('scroll', handleScroll);
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-    createGlitchEffect();
-    revealOnScroll(); // Initial check for elements in view
 });
