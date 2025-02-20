@@ -6,6 +6,7 @@
     --gray-300: rgba(255, 255, 255, 0.3);
 }
 
+/* Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -18,8 +19,10 @@ body {
     color: var(--white);
     line-height: 1.6;
     overflow-x: hidden;
+    perspective: 1000px;
 }
 
+/* Navigation */
 header {
     position: fixed;
     top: 0;
@@ -48,57 +51,62 @@ nav {
     text-decoration: none;
     font-weight: 400;
     font-size: 0.9rem;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     position: relative;
     padding: 0.5rem 0;
     transition: all 0.3s ease;
 }
 
-.nav-links a::after {
+.nav-links a::before {
     content: '';
     position: absolute;
+    left: -10px;
+    right: -10px;
+    top: 0;
     bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
     background: var(--white);
     transform: scaleX(0);
     transform-origin: right;
-    transition: transform 0.5s cubic-bezier(0.17, 0.84, 0.44, 1);
+    transition: transform 0.3s ease;
+    z-index: -1;
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover {
+    color: var(--black);
+}
+
+.nav-links a:hover::before {
     transform: scaleX(1);
     transform-origin: left;
 }
 
+/* Main Content */
 main {
     max-width: 1200px;
     margin: 8rem auto 2rem;
     padding: 0 2rem;
 }
 
-/* Cinematic animations for sections and headings */
 section {
-    opacity: 0;
-    transform: translateY(300px);
-    transition: all 1.5s cubic-bezier(0.17, 0.84, 0.44, 1);
     margin-bottom: 8rem;
+    opacity: 0;
+    transform: translateY(100px) scale(0.95);
+    transition: all 1s cubic-bezier(0.17, 0.84, 0.44, 1);
 }
 
 section.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
-/* Dramatic heading animations */
+/* Dramatic text animations */
 h1, h2 {
-    opacity: 0;
-    transform: scale(1.4) translateY(100px);
-    transition: all 1.5s cubic-bezier(0.17, 0.84, 0.44, 1);
     position: relative;
     overflow: hidden;
+    opacity: 0;
+    transform: scale(1.2) translateY(50px);
+    transition: all 1.2s cubic-bezier(0.17, 0.84, 0.44, 1);
 }
 
 h1 {
@@ -106,27 +114,12 @@ h1 {
     font-weight: 800;
     letter-spacing: -2px;
     margin-bottom: 2rem;
-    line-height: 1.1;
 }
 
 h2 {
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 2.5rem;
     margin-bottom: 3rem;
-}
-
-h1::before, h2::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    background: var(--white);
-    transform: scaleX(1);
-    transform-origin: right;
-    transition: transform 1.2s cubic-bezier(0.17, 0.84, 0.44, 1);
-    z-index: 1;
+    display: inline-block;
 }
 
 section.visible h1,
@@ -135,49 +128,42 @@ section.visible h2 {
     transform: scale(1) translateY(0);
 }
 
-section.visible h1::before,
-section.visible h2::before {
-    transform: scaleX(0);
-}
-
 /* Card animations */
-.card, .pdf-card {
-    opacity: 0;
-    transform: translateY(200px) scale(0.9);
-    transition: all 1.2s cubic-bezier(0.17, 0.84, 0.44, 1);
-    position: relative;
+.card {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--gray-100);
     border-radius: 4px;
     padding: 2.5rem;
     margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 0.8s cubic-bezier(0.17, 0.84, 0.44, 1);
 }
 
-.card::before, .pdf-card::before {
+.card::before {
     content: '';
     position: absolute;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    top: 0;
-    background: var(--white);
-    transform: scaleY(1);
-    transform-origin: bottom;
-    transition: transform 1s cubic-bezier(0.17, 0.84, 0.44, 1);
-    z-index: 1;
+    background: linear-gradient(45deg, transparent, var(--gray-100), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
 }
 
-section.visible .card,
-section.visible .pdf-card {
+section.visible .card {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
 }
 
-section.visible .card::before,
-section.visible .pdf-card::before {
-    transform: scaleY(0);
+.card:hover::before {
+    transform: translateX(100%);
 }
 
+/* Experience section */
 .experience-title {
     font-size: 1.25rem;
     font-weight: 600;
@@ -190,76 +176,82 @@ section.visible .pdf-card::before {
     margin-bottom: 1rem;
 }
 
+/* PDF Grid */
 .pdf-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2rem;
 }
 
-.contact-form {
-    max-width: 600px;
+.pdf-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--gray-100);
+    border-radius: 4px;
+    padding: 2rem;
+    position: relative;
+    transition: all 0.5s ease;
+    opacity: 0;
+    transform: translateY(100px) scale(0.95);
 }
 
-.form-group {
-    margin-bottom: 2rem;
+section.visible .pdf-card {
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }
 
-label {
-    display: block;
-    margin-bottom: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
+.pdf-link {
+    color: var(--white);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
 }
 
-input, textarea {
-    width: 100%;
-    padding: 1rem;
+.pdf-link:hover {
+    color: var(--gray-200);
+}
+
+/* Contact Section */
+.social-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--gray-100);
     border-radius: 4px;
     color: var(--white);
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-input:focus, textarea:focus {
-    outline: none;
-    border-color: var(--white);
-    background: rgba(255, 255, 255, 0.05);
-}
-
-button {
-    background: var(--white);
-    color: var(--black);
-    border: none;
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: 1px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-button::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    transition: all 0.5s cubic-bezier(0.17, 0.84, 0.44, 1);
     opacity: 0;
-    transition: all 0.3s ease;
+    transform: translateY(50px);
 }
 
-button:hover::after {
+section.visible .social-link {
     opacity: 1;
+    transform: translateY(0);
 }
 
+.social-link:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--gray-200);
+}
+
+.social-link i {
+    font-size: 1.5rem;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
     nav {
         padding: 1rem;
