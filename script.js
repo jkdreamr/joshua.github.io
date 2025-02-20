@@ -9,9 +9,9 @@ class Particle {
     constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.radius = Math.random() * 2 + 1;
-        this.velocityX = (Math.random() - 0.5) * 2;
-        this.velocityY = (Math.random() - 0.5) * 2;
+        this.radius = Math.random() * 1.5 + 0.5;
+        this.velocityX = (Math.random() - 0.5) * 1.5;
+        this.velocityY = (Math.random() - 0.5) * 1.5;
     }
 
     draw() {
@@ -31,7 +31,7 @@ class Particle {
 }
 
 const particles = [];
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 80; i++) {
     particles.push(new Particle());
 }
 
@@ -57,10 +57,33 @@ const sections = document.querySelectorAll('.section');
 window.addEventListener('scroll', () => {
     sections.forEach(section => {
         const rect = section.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 100) {
+        if (rect.top < window.innerHeight - 150) {
             section.classList.add('active');
+            section.style.transitionDelay = `${Math.random() * 0.5}s`; // Staggered delays for variety
         }
     });
+});
+
+// Profile Picture Upload
+const profilePic = document.getElementById('profile-pic');
+const fileInput = document.createElement('input');
+fileInput.type = 'file';
+fileInput.accept = 'image/*';
+fileInput.style.display = 'none';
+
+fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            profilePic.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+profilePic.addEventListener('click', () => {
+    fileInput.click();
 });
 
 // Form Submission
@@ -72,12 +95,14 @@ form.addEventListener('submit', (e) => {
 });
 
 // Hover Effects for Cards
-const cards = document.querySelectorAll('.experience-card, .writing-card, .thought-card');
+const cards = document.querySelectorAll('.experience-card, .writing-card, .writing-content');
 cards.forEach(card => {
     card.addEventListener('mouseenter', () => {
-        card.style.background = 'rgba(255, 255, 255, 0.15)';
+        card.style.background = 'rgba(0, 255, 204, 0.08)';
+        card.style.transform = 'translateY(-15px) scale(1.05)';
     });
     card.addEventListener('mouseleave', () => {
-        card.style.background = 'rgba(255, 255, 255, 0.05)';
+        card.style.background = 'rgba(255, 255, 255, 0.03)';
+        card.style.transform = 'translateY(0) scale(1)';
     });
 });
