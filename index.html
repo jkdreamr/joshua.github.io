@@ -3,95 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Your Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#experiences">Experiences</a>
-                <a href="#writings">Writings</a>
-                <a href="#thoughts">Thoughts</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </nav>
-    </header>
+    <div class="container">
+        <header>
+            <nav class="nav-links">
+                <a href="#about">ABOUT</a>
+                <a href="#experiences">EXPERIENCES</a>
+                <a href="#writings">WRITINGS</a>
+                <a href="#thoughts">THOUGHTS</a>
+                <a href="#contact">CONTACT</a>
+            </nav>
+        </header>
 
-    <main>
-        <section id="intro">
-            <div class="intro-content">
-                <h1>Your Name</h1>
-                <p class="subtitle">Digital architect & innovator</p>
-            </div>
-        </section>
-
-        <section id="about">
-            <h2>About</h2>
-            <div class="card">
-                <p>Your story here. I'm a passionate developer focused on creating impactful digital experiences.</p>
-            </div>
-        </section>
-
-        <section id="experiences">
-            <h2>Experiences</h2>
-            <div class="card">
-                <div class="experience-title">Position Title</div>
-                <div class="experience-date">2023 — Present</div>
-                <p>Description of your role and achievements</p>
-            </div>
-            <div class="card">
-                <div class="experience-title">Previous Position</div>
-                <div class="experience-date">2021 — 2023</div>
-                <p>Previous role description</p>
-            </div>
-        </section>
-
-        <section id="writings">
-            <h2>Writings</h2>
-            <div class="pdf-list">
-                <div class="pdf-card">
-                    <h3>Document Title</h3>
-                    <p>Brief description</p>
-                    <a href="path-to-pdf.pdf" target="_blank" class="pdf-link">View PDF</a>
+        <main>
+            <section id="about">
+                <h2>ABOUT</h2>
+                <div class="content">
+                    <p>Your story and background here.</p>
                 </div>
-                <div class="pdf-card">
-                    <h3>Another Document</h3>
-                    <p>Brief description</p>
-                    <a href="path-to-pdf.pdf" target="_blank" class="pdf-link">View PDF</a>
+            </section>
+
+            <section id="experiences">
+                <h2>EXPERIENCES</h2>
+                <div class="content">
+                    <div class="experience-item">
+                        <h3>Position Title</h3>
+                        <p class="date">2023 - Present</p>
+                        <p>Description of your role and achievements</p>
+                    </div>
+                    <div class="experience-item">
+                        <h3>Previous Role</h3>
+                        <p class="date">2021 - 2023</p>
+                        <p>Previous role description</p>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="thoughts">
-            <h2>Thoughts</h2>
-            <div class="card">
-                <p>Share your insights and reflections here.</p>
-            </div>
-        </section>
+            <section id="writings">
+                <h2>WRITINGS</h2>
+                <div class="content">
+                    <div class="writing-grid">
+                        <div class="writing-item">
+                            <h3>Article Title</h3>
+                            <p>Brief description of the article</p>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                        <div class="writing-item">
+                            <h3>Another Article</h3>
+                            <p>Brief description of another article</p>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <section id="contact">
-            <h2>Connect</h2>
-            <div class="social-links">
-                <a href="https://twitter.com/yourusername" class="social-link" target="_blank">
-                    <i class="fab fa-twitter"></i>
-                    <span>@yourusername</span>
-                </a>
-                <a href="https://linkedin.com/in/yourprofile" class="social-link" target="_blank">
-                    <i class="fab fa-linkedin"></i>
-                    <span>LinkedIn</span>
-                </a>
-                <a href="mailto:your.email@example.com" class="social-link">
-                    <i class="fas fa-envelope"></i>
-                    <span>Email</span>
-                </a>
-            </div>
-        </section>
-    </main>
+            <section id="thoughts">
+                <h2>THOUGHTS</h2>
+                <div class="content">
+                    <p>Share your thoughts and insights here.</p>
+                </div>
+            </section>
 
-    <script src="script.js"></script>
+            <section id="contact">
+                <h2>CONTACT</h2>
+                <div class="content">
+                    <div class="social-links">
+                        <a href="https://twitter.com/yourusername" target="_blank" rel="noopener">
+                            <i class="fab fa-twitter"></i>
+                            <span>Twitter</span>
+                        </a>
+                        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener">
+                            <i class="fab fa-linkedin"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a href="mailto:your.email@example.com">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="./script.js"></script>
 </body>
 </html>
