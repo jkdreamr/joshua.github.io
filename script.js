@@ -116,4 +116,9 @@ cards.forEach(card => {
         card.style.opacity = '1';
     });
     card.addEventListener('mouseleave', () => {
-        card.style.background = 'rgba(255, 255, 255, 0.02Sorry about that, something didn't go as planned. Please try again, and if you're still seeing this message, go ahead and restart the app.
+        card.style.background = 'rgba(255, 255, 255, 0.02)';
+        card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
+        card.style.boxShadow = 'none';
+        card.style.opacity = '0.9';
+    });
+});
